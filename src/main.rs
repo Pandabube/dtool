@@ -176,7 +176,6 @@ fn count_form(c:i32, t:f32) {
     println!("{}. {:.2} sec.",c , t);
 }
 
-
 static PAUSE:&str = "Auto Scan Paused";
 static INVALIDE:&str = "Invalid input";
 static KEY_TXT:&str = "Enter the Key you are useing to D-Scan";
