@@ -14,11 +14,15 @@ extern crate savefile_derive;
 
 
 fn main() {
+
+    //setting up the standad values used
     let path = env::var("USERPROFILE");
     let saving_path = format!("{}\\Documents\\autoscan.svf", path.unwrap());
     let mut dkey:char = 'v';
     let mut mint:u8 = 3;
     let mut maxt:u8 = 6;
+    
+    //if a save file exists replace the standad values with the saved values
     if Path::new(&saving_path).exists() {
         #[derive(Savefile)]
         struct Man{key: String, min: u8, max: u8}
@@ -28,6 +32,8 @@ fn main() {
         dkey = reload.key.chars().next().unwrap();
     }
     let mut motd = "";
+    
+    //starting the actual menu
     loop {
         cls();
         settext(dkey, mint, maxt, motd);
@@ -174,6 +180,7 @@ fn save_to_file(k:char, m:u8, n:u8, p:&str) -> Result<(), SavefileError> {
 }
 
 
+//the place to mod the text output
 fn settext(k:char, n:u8, m:u8, o:&str){
     println!("
 D-Scan Tool Menu
