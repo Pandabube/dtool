@@ -91,7 +91,7 @@ fn main() {
 
 
 fn cls(){
-    ClearScreen::default().clear().expect("faild");
+    //ClearScreen::default().clear().expect("faild");
 }
 
 
@@ -142,7 +142,7 @@ fn input() -> String{
 }
 
 
-fn save_to_file(k:char, m:u8, n:u8, p:&str){
+fn save_to_file(k:char, m:u8, n:u8, p:&str) -> Result<(), SavefileError> {
 
     #[derive(Savefile)]
     struct Man{
@@ -151,8 +151,9 @@ fn save_to_file(k:char, m:u8, n:u8, p:&str){
         max: u8,
     }
     let tup = Man {key: k.to_string(), max: m, min: n};
-    save_file(p ,0, &tup);
-} 
+    save_file(p ,0, &tup)?;
+    Ok(())
+}
 
 
 fn settext(k:char, n:u8, m:u8, o:&str){
