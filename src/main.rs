@@ -45,9 +45,10 @@ fn main() {
             let vssk = unsafe {VkKeyScanW(dkey as u16)};
             dtool(dkey, mint, maxt, vssk.try_into().unwrap());
             motd = PAUSE;
-        
+            
+            
+            //change the min value
         } else if usr == 'n'{
-            //cls();
             println!("{}", LOW);
             mint = match input().parse(){
                 Ok(num) => num,
@@ -56,9 +57,17 @@ fn main() {
                     continue;
                 }
             };
-            save_to_file(dkey, maxt, mint, &pp);
+            match save_to_file(dkey, maxt, mint, &pp){
+                Ok(n) => n,
+                Err(..)=> {
+                    motd = INVALIDE;
+                    continue;
+                }
+            };
+            
+
+            // Change the max value
         } else if usr == 'm'{
-            //cls();
             println!("{}", HIGH);
             maxt = match input().parse(){
                 Ok(num) => num,
@@ -67,9 +76,17 @@ fn main() {
                     continue;
                 }
             };
-            save_to_file(dkey, maxt, mint, &pp);
+            match save_to_file(dkey, maxt, mint, &pp){
+                Ok(n) => n,
+                Err(..)=> {
+                    motd = INVALIDE;
+                    continue;
+                }
+            };
+            
+
+            // Change the key to d-scan
         } else if usr == 'k'{
-            //cls();
             println!("{}", KEY_TXT);
             dkey = match input().parse(){
                 Ok(n) => n,
@@ -78,7 +95,16 @@ fn main() {
                     continue;
                 }
             };
-            save_to_file(dkey, maxt, mint, &pp);
+            match save_to_file(dkey, maxt, mint, &pp){
+                Ok(n) => n,
+                Err(..)=> {
+                    motd = INVALIDE;
+                    continue;
+                }
+            };
+            
+
+            //Quit the Program
         } else if usr == 'q'{
             cls();
             println!("Program Ended");
