@@ -1,4 +1,3 @@
-//use std::env;
 use getch::Getch;
 use std::{io, env};
 use std::path::Path;
@@ -9,7 +8,6 @@ use rand::{thread_rng, Rng};
 use clearscreen::ClearScreen;
 use winput::{press, release, send, Vk};
 use winapi::um::winuser::{GetAsyncKeyState, VkKeyScanW};
-//use winapi::um::winuser::VkKeyScanW;
 use savefile::prelude::*;
 #[macro_use]
 extern crate savefile_derive;
