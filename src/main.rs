@@ -51,16 +51,16 @@ fn main() {
         } else if usr == 'n'{
             println!("{}", LOW);
             mint = match input().parse(){
-                Ok(num) => num,
+                Ok(n) => n,
                 Err(..)=>{
                     motd = INVALIDE;
                     continue;
                 }
             };
             match save_to_file(dkey, maxt, mint, &pp){
-                Ok(n) => n,
+                Ok(()) => (),
                 Err(..)=> {
-                    motd = INVALIDE;
+                    motd = FAIL_TO_SAVE;
                     continue;
                 }
             };
@@ -70,16 +70,16 @@ fn main() {
         } else if usr == 'm'{
             println!("{}", HIGH);
             maxt = match input().parse(){
-                Ok(num) => num,
+                Ok(n) => n,
                 Err(..)=>{
                      motd = INVALIDE;
                     continue;
                 }
             };
             match save_to_file(dkey, maxt, mint, &pp){
-                Ok(n) => n,
+                Ok(()) => (),
                 Err(..)=> {
-                    motd = INVALIDE;
+                    motd = FAIL_TO_SAVE;
                     continue;
                 }
             };
@@ -96,9 +96,9 @@ fn main() {
                 }
             };
             match save_to_file(dkey, maxt, mint, &pp){
-                Ok(n) => n,
+                Ok(()) => (),
                 Err(..)=> {
-                    motd = INVALIDE;
+                    motd = FAIL_TO_SAVE;
                     continue;
                 }
             };
@@ -203,6 +203,7 @@ fn count_form(c:i32, t:f32) {
 
 static PAUSE:&str = "Auto Scan Paused";
 static INVALIDE:&str = "Invalid input";
+static FAIL_TO_SAVE:&str = "Faild to save to file";
 static KEY_TXT:&str = "Enter the Key you are useing to D-Scan";
 static LOW:&str = "Enter the minimal time in seconds to Scan\n0-255";
 static HIGH:&str = "Enter the maximal time in seconds to Scan\n0-255";
