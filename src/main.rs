@@ -3,13 +3,16 @@ use std::env;
 use std::path::Path;
 use std::thread::sleep;
 use std::time::Duration;
+use std::process::exit;
+use getch::Getch;
+use rand::{thread_rng, Rng};
 use winput::{press, release, send, Vk};
 use clearscreen::ClearScreen;
-use std::io;
-use std::process::exit;
 use winapi::um::winuser::GetAsyncKeyState;
 use winapi::um::winuser::VkKeyScanW;
-use getch::Getch;
+use savefile::prelude::*;
+#[macro_use]
+extern crate savefile_derive;
 
 
 fn main() {
@@ -18,7 +21,18 @@ fn main() {
     let mut dkey:char = 'v';
     let mut mint:u8 = 3;
     let mut maxt:u8 = 6;
-    let mut dkey:char = 'v';
+    if Path::new(&pp).exists() {
+        #[derive(Savefile)]
+        struct Man{
+            key: String,
+            min: u8,
+            max: u8,
+        }
+        let reload:Man = load_file(&pp, 0).unwrap();
+        mint = reload.min;
+        maxt = reload.max;
+        dkey = reload.key.chars().next().unwrap();
+    }
     let mut motd = "";
     loop {
         cls();
@@ -43,7 +57,8 @@ fn main() {
                     motd = INVALIDE;
                     continue;
                 }
-            }
+            };
+            save_to_file(dkey, maxt, mint, &pp);
         } else if usr == 'm'{
             //cls();
             println!("{}", HIGH);
@@ -53,7 +68,8 @@ fn main() {
                      motd = INVALIDE;
                     continue;
                 }
-            }
+            };
+            save_to_file(dkey, maxt, mint, &pp);
         } else if usr == 'k'{
             //cls();
             println!("{}", KEY_TXT);
@@ -63,7 +79,8 @@ fn main() {
                     motd = INVALIDE;
                     continue;
                 }
-            }
+            };
+            save_to_file(dkey, maxt, mint, &pp);
         } else if usr == 'q'{
             cls();
             println!("Program Ended");
@@ -127,9 +144,22 @@ fn input() -> String{
 }
 
 
+fn save_to_file(k:char, m:u8, n:u8, p:&str){
+
+    #[derive(Savefile)]
+    struct Man{
+        key: String,
+        min: u8,
+        max: u8,
+    }
+    let tup = Man {key: k.to_string(), max: m, min: n};
+    save_file(p ,0, &tup);
+} 
+
+
 fn settext(k:char, n:u8, m:u8, o:&str){
-    println!(
-"D-Scan Tool Menu
+    println!("
+D-Scan Tool Menu
 -----------------
 Start auto Scanning     --  <S>
 Quit Program            --  <Q>
