@@ -91,7 +91,7 @@ fn main() {
 
 
 fn cls(){
-    //ClearScreen::default().clear().expect("faild");
+    ClearScreen::default().clear().expect("faild");
 }
 
 
