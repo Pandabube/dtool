@@ -15,18 +15,14 @@ extern crate savefile_derive;
 
 fn main() {
     let path = env::var("USERPROFILE");
-    let pp = format!("{}\\Documents\\autoscan.svf", path.unwrap());
+    let saving_path = format!("{}\\Documents\\autoscan.svf", path.unwrap());
     let mut dkey:char = 'v';
     let mut mint:u8 = 3;
     let mut maxt:u8 = 6;
-    if Path::new(&pp).exists() {
+    if Path::new(&saving_path).exists() {
         #[derive(Savefile)]
-        struct Man{
-            key: String,
-            min: u8,
-            max: u8,
-        }
-        let reload:Man = load_file(&pp, 0).unwrap();
+        struct Man{key: String, min: u8, max: u8}
+        let reload:Man = load_file(&saving_path, 0).unwrap();
         mint = reload.min;
         maxt = reload.max;
         dkey = reload.key.chars().next().unwrap();
@@ -57,7 +53,7 @@ fn main() {
                     continue;
                 }
             };
-            match save_to_file(dkey, maxt, mint, &pp){
+            match save_to_file(dkey, maxt, mint, &saving_path){
                 Ok(()) => (),
                 Err(..)=> {
                     motd = FAIL_TO_SAVE;
@@ -76,7 +72,7 @@ fn main() {
                     continue;
                 }
             };
-            match save_to_file(dkey, maxt, mint, &pp){
+            match save_to_file(dkey, maxt, mint, &saving_path){
                 Ok(()) => (),
                 Err(..)=> {
                     motd = FAIL_TO_SAVE;
@@ -95,7 +91,7 @@ fn main() {
                     continue;
                 }
             };
-            match save_to_file(dkey, maxt, mint, &pp){
+            match save_to_file(dkey, maxt, mint, &saving_path){
                 Ok(()) => (),
                 Err(..)=> {
                     motd = FAIL_TO_SAVE;
@@ -171,11 +167,7 @@ fn input() -> String{
 fn save_to_file(k:char, m:u8, n:u8, p:&str) -> Result<(), SavefileError> {
 
     #[derive(Savefile)]
-    struct Man{
-        key: String,
-        min: u8,
-        max: u8,
-    }
+    struct Man{key: String, min: u8, max: u8}
     let tup = Man {key: k.to_string(), max: m, min: n};
     save_file(p ,0, &tup)?;
     Ok(())
