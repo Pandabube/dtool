@@ -3,6 +3,19 @@
 version = 3
 
 [[package]]
+name = "Auto_Scan"
+version = "0.1.0"
+dependencies = [
+ "clearscreen",
+ "getch",
+ "rand 0.8.5",
+ "savefile",
+ "savefile-derive",
+ "winapi",
+ "winput",
+]
+
+[[package]]
 name = "arrayvec"
 version = "0.7.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -502,19 +515,6 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
-]
-
-[[package]]
-name = "tutor"
-version = "0.1.0"
-dependencies = [
- "clearscreen",
- "getch",
- "rand 0.8.5",
- "savefile",
- "savefile-derive",
- "winapi",
- "winput",
 ]
 
 [[package]]
